@@ -3,9 +3,9 @@ import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 
 const InputField=(props)=>{
-    const {placeHolder, value} = props
+    const {placeHolder, value, onChange} = props
     return(
-        <TextInput style={styles.input } placeholder={props.placeHolder} placeholderTextColor={'white'} value={value} onChange={(t)=>console.log(t)}  />
+        <TextInput style={styles.input } placeholder={props.placeHolder} placeholderTextColor={'white'} value={props.value} onChangeText={props.onChange}  />
     )
 }
 export default  InputField;

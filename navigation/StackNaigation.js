@@ -6,16 +6,17 @@ import HomeScreen from '../screens/homeScreen';
 import LoginScreen from '../screens/loginScreen';
 import MainScreen from '../screens/MainScreen';
 import DetailScreen from '../screens/DetailsScreen';
-
+import ForgetScreen from '../screens/forgetScreen';
  function StackNavigation(){
     const  Stack = createNativeStackNavigator();
     return(
         <NavigationContainer>
         <Stack.Navigator initialRouteName="Login" >
         <Stack.Screen name='Home' component={HomeScreen} />
-        <Stack.Screen name='Login' component={LoginScreen} options ={{headerShown:false}}/>
+        <Stack.Screen name='Login' component={LoginScreen}/>
         <Stack.Screen name='Main' component={MainScreen}  options={{headerShown:false}}/>
         <Stack.Screen name='Detail' component={DetailScreen} options={{headerShown:false}}/>
+        <Stack.Screen name='Forget' component={ForgetScreen} options={{headerShown:false}}/>
         </Stack.Navigator>
   
       </NavigationContainer>

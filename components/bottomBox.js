@@ -1,10 +1,10 @@
 import { View, Text, StyleSheet, TouchableOpacity, Pressable } from "react-native";
 
-const BottomBox = ({props}) => {
-    const {move}=props
+const BottomBox = (props) => {
+    const {onPress} = props;
     return (
         <View style={styles.container}>
-            <Text style={styles.text}> Dont't have an account? <Pressable onPress={props.move}><Text style={styles.signuptxt}>Sign Up</Text></Pressable> </Text>  
+            <Text style={styles.text}> Dont't have an account? <Pressable onPress={props.onPress}><Text style={styles.signuptxt}>Sign Up</Text></Pressable> </Text>  
         </View>
     )
 }
@@ -15,11 +15,12 @@ const styles = StyleSheet.create({
         height: 100,
         backgroundColor: '#1B69DF',
         alignSelf: "center",
-        marginTop: 135,
+        
         borderCurve: 'continuous',
         borderTopLeftRadius: 120,
         borderTopRightRadius: 120,
-        justifyContent:'center'
+        justifyContent:'center',
+        marginTop:140
         
     },
     text: {
