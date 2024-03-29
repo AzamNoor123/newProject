@@ -7,19 +7,21 @@ import WelcomeBack from '../components/welcomeBack'
 import BottomBox from '../components/bottomBox'
 
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import AuthHelper from '../helper/AuthHelper'
 
 const LoginScreen = ({navigation}) => {
   const auth=getAuth();
   const  [email, setEmail] = useState("");
   const [password, setPassword]=useState("");
   const [loading, setLoading] = useState(false)
-  const  signin =async()=>{
+  const signinpressed=async()=>{
     setLoading(true);
-   await signInWithEmailAndPassword(auth,email,password ).then(()=> {alert('Sign in successfully'), navigation.navigate('Main')})
-    .catch(error=>alert(error.code))
+   await AuthHelper.signinUser(email,password);
+   navigation.navigate('Main');
     setLoading(false);
-  
   }
+
+
 
 
 
@@ -37,7 +39,9 @@ const LoginScreen = ({navigation}) => {
       <InputField  placeHolder ='Password:' value={password} onChange={(t)=>setPassword(t)} secureTextEntry />
       
       {loading?<ActivityIndicator color={'#F79708'} size={'large'} />:<></>}
-      <SubmitButton btntitle ='Sign In' btnpress={()=> signin() } />
+      <SubmitButton btntitle ='Sign In' btnpress={()=> signinpressed()
+        
+         } />
       <TouchableOpacity onPress={()=>navigation.navigate('Forget')}>
         <Text style={styles.forget}> forget password?</Text>
       </TouchableOpacity>

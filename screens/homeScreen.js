@@ -6,38 +6,22 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import InputField from '../components/inputField';
 import SubmitButton from '../components/submitButton';
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import AuthHelper from '../helper/AuthHelper';
 
 
 const HomeScreen = ({ navigation }) => {
   const [email, setemail] = useState();
   const [passwd, setpasswd] = useState();
+  const [Fname, setFname] = useState();
+  const [Lname, setLname] = useState();
   const [loading, setLoading]=useState(false);
-  const signup = async() => {
-    const auth=getAuth();
+  const btnpress=async()=>{
     setLoading(true);
-    
-    await createUserWithEmailAndPassword(auth,email, passwd)
-      .then(() => {
-        
-        alert('User account created !');
-        navigation.navigate('Login')
-      })
-      .catch(error => { 
-        if (error.code === 'auth/email-already-in-use') {
-          alert('That email address is already in use!');
-        }
-        if(error.code==='auth/admin-restricted-operation'){
-          alert('Please Enter credentials');
-        }
-
-        if (error.code === 'auth/invalid-email') {
-          alert('That email address is invalid!');
-        }
-
-        console.error(error);
-      });
-      setLoading(false);
+    await AuthHelper.addUserData(Fname, Lname,email);
+   await AuthHelper.CreateUser(email, passwd);
+    setLoading(false);
   }
+  
 
   return (
     <View style={styles.container}>
@@ -47,13 +31,13 @@ const HomeScreen = ({ navigation }) => {
         style={styles.container}>
           <ScrollView>
         <Image source={require('../assets/Vector.png')} style={styles.image} />
-        <InputField placeHolder="First name:" />
-        <InputField placeHolder="Last name:" /> 
+        <InputField placeHolder="First name:" value={Fname} onChange={(t) => { setFname(t) }}/>
+        <InputField placeHolder="Last name:" value={Lname} onChange={(t) => { setLname(t) }}/> 
         <InputField placeHolder="Eamil address:" value={email} onChange={(t) => { setemail(t) }} />
         <InputField placeHolder="password:" value={passwd} onChange={(t) => { setpasswd(t) }} />
         {loading?<ActivityIndicator color={'#F79708'} size={'large'} />:<></>}
 
-        <SubmitButton btntitle=' Sign Up' btnpress={() => signup()} />
+        <SubmitButton btntitle=' Sign Up' btnpress={() => btnpress() } />
         <Text style={styles.signupwith}>Sign up with</Text>
         <Text style={styles.signupwith}> Alraedy have an account? <Pressable onPress={() => navigation.navigate('Login')}><Text style={styles.pressable}>Sign In</Text></Pressable></Text>
 

@@ -3,15 +3,16 @@ import InputField from "../components/inputField";
 import { LinearGradient } from "expo-linear-gradient";
 import { useState } from "react";
 import { getAuth, sendPasswordResetEmail } from "firebase/auth";
+import AuthHelper from "../helper/AuthHelper";
 const ForgetScreen = ({ navigation }) => {
     const [email, setEmail] = useState('');
     const [loading,setLoading]=useState(false);
-    const auth = getAuth();
-    const reset = () => {
+    const forgetbtnpressed=()=>{
         setLoading(true);
-        sendPasswordResetEmail(auth, email).then(() => { alert('reset email sent to your email check spam also'), navigation.navigate('Login') }).catch(() => alert(error.code));
+        AuthHelper.resetUserPasswd(email);
         setLoading(false);
     }
+  
     return (
         <View>
             <LinearGradient colors={['#256BD5', '#F79708',]}
@@ -19,7 +20,7 @@ const ForgetScreen = ({ navigation }) => {
                 <InputField placeHolder='Email address:' value={email} onChange={(t) => setEmail(t)} />
                 {loading?<ActivityIndicator color={'#F79708'} size={'small'} />:<></>}
 
-                <Pressable style={styles.pressable} onPress={() => reset()}>
+                <Pressable style={styles.pressable} onPress={() =>forgetbtnpressed()}>
                     <Text>Reset Password</Text>
                 </Pressable>
 
